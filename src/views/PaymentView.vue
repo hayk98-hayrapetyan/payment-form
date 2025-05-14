@@ -114,6 +114,10 @@ onMounted(() => {
     })
   }
 
+  if(route.query.paymentStatus){
+    router.replace('/')
+  }
+
   secureFields = new SecureFields()
 
   if (!secureFields) return
@@ -300,7 +304,6 @@ onMounted(() => {
 }
 
 .payment-form__status {
-  margin-top: 20px;
   padding: 15px;
   border-radius: 4px;
   text-align: center;
