@@ -8,7 +8,7 @@ import type {
   SecureFieldsSubmitOptions,
   SecureFieldsSuccess,
   SecureFieldsValidationResponse,
-} from '@/types'
+} from '@/types/index'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
@@ -158,7 +158,6 @@ onMounted(() => {
         query: {
           transactionId: data.transactionId,
           returnUrl: route.path,
-          cardType: data.cardType || 'unknown',
         },
       })
     }
