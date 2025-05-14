@@ -1,39 +1,62 @@
-# payment-form
+# Payment Integration
 
-This template should help get you started developing with Vue 3 in Vite.
+## 1st question: benefits and downsides of each integration solutions
 
-## Recommended IDE Setup
+### iFrame Integration
+**Benefits:**
+- PCI-compliant (card data never touches merchant servers)
+- Seamless customer experience (appears as part of your site)
+- Quick implementation
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+**Downsides:**
+- Limited UI customization options
+- Full dependency on PSP's availability
+- Potential performance impact
 
-## Type Support for `.vue` Imports in TS
+### Client-Side Tokenization (CSE)
+**Benefits:**
+- Complete control over checkout design
+- Reduced PCI compliance scope
+- Faster processing (no redirects)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+**Downsides:**
+- More complex integration
+- Requires proper form security measures
 
-## Customize configuration
+### Hosted Payment Page
+**Benefits:**
+- No PCI compliance requirements
+- Automatic updates from PSP
+- Supports multiple payment methods
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+**Downsides:**
+- Poor user experience (redirect away from your site)
+- Limited branding capabilities
+- Higher abandonment rates
 
-## Project Setup
+-------------------------------------------------------
 
-```sh
-npm install
-```
+## 3rd question: 3DS Authentication Implementation
 
-### Compile and Hot-Reload for Development
+### Potential Risks
+- Network failures during redirect to/from bank's 3DS page
+- Users abandoning the process mid-authentication
+- 3DS page timeouts or server errors
+- Transaction context loss on page refresh (mitigated via URL parameters)
 
-```sh
-npm run dev
-```
+### Current Solution
+- **State Management**:  
+  Uses URL parameters (`transactionId`, `returnUrl`) to maintain transaction continuity
+- **Error Tracking**:  
+  - RudderStack events for all redirect lifecycle stages  
+  - Clear user-facing status messages for failures  
+- **Production Considerations**:  
+  - Sentry integration recommended for error logging  
+  - Additional latency monitoring for 3DS steps  
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+### Success Metrics
+| Metric | Measurement Method |
+|--------|-------------------|
+| Success Rate | `(Payment Completed events) / (3DS Redirect Initiated events)` |
+| Drop-off Points | Funnel analysis between redirect stages |
+| System Latency | Time delta between redirect start/complete events |
