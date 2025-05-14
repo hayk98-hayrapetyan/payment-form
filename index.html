@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script>
+      rudderanalytics = window.rudderanalytics = []
+      for (
+        var methods = ['load', 'page', 'track', 'identify', 'reset'], i = 0;
+        i < methods.length;
+        i++
+      ) {
+        var method = methods[i]
+        rudderanalytics[method] = (function (a) {
+          return function () {
+            rudderanalytics.push([a].concat(Array.prototype.slice.call(arguments)))
+          }
+        })(method)
+      }
+      rudderanalytics.load(
+        '2x3007dSG99J3dc06JeFJK96O1j',
+        'https://netzeroinsviet.dataplane.rudderstack.com',
+      )
+    </script>
+    <script src="https://cdn.rudderlabs.com/rudder-analytics.min.js"></script>
+    <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
