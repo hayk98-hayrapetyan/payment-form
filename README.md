@@ -1,5 +1,8 @@
 # Payment Integration
 
+## Live Preview
+➡️ **[View Demo](http://poised-cellar.surge.sh/)** 
+
 ## 1st question: benefits and downsides of each integration solutions
 
 ### iFrame Integration
